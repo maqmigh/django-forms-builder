@@ -13,6 +13,7 @@ except ImportError:
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, ugettext_lazy as _
 from future.builtins import str
 
@@ -152,7 +153,7 @@ class AbstractForm(models.Model):
         ]
         for i, (text, url) in enumerate(links):
             links[i] = "<a href='%s'>%s</a>" % (url, ugettext(text))
-        return "<br>".join(links)
+        return mark_safe("<br>".join(links))
     admin_links.allow_tags = True
     admin_links.short_description = ""
 
