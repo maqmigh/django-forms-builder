@@ -1,18 +1,20 @@
 from __future__ import unicode_literals
-from future.builtins import int, range, str
 
+import os
 from datetime import date, datetime
 from os.path import join, split
-from uuid import uuid4
 
 import django
 from django import forms
+from future.builtins import int, range, str
+
 try:
-    from django.forms import SelectDateWidget
+    from django.forms import SelectDateWidget, Form
 except ImportError:
     # For Django 1.8 compatibility
     from django.forms.extras import SelectDateWidget
 from django.core.files.storage import default_storage
+
 try:
     from django.urls import reverse
 except ImportError:
@@ -25,13 +27,11 @@ from django.utils.translation import ugettext_lazy as _
 from forms_builder.forms import fields
 from forms_builder.forms.models import FormEntry, FieldEntry
 from forms_builder.forms import settings
-from forms_builder.forms.utils import now, split_choices
-
+from forms_builder.forms.utils import now, split_choices, slugify
 
 fs = default_storage
 if settings.UPLOAD_ROOT is not None:
     fs = default_storage.__class__(location=settings.UPLOAD_ROOT)
-
 
 ##############################
 # Each type of export filter #
@@ -101,8 +101,8 @@ FILTER_FUNCS = {
         lambda val, field: val.lower() != field.lower(),
     FILTER_CHOICE_BETWEEN:
         lambda val_from, val_to, field: (
-            (not val_from or val_from <= field) and
-            (not val_to or val_to >= field)
+                (not val_from or val_from <= field) and
+                (not val_to or val_to >= field)
         ),
     FILTER_CHOICE_CONTAINS_ANY:
         lambda val, field: set(val) & set(split_choices(field)),
@@ -152,7 +152,7 @@ class FormForForm(forms.ModelForm):
             field_key = field.slug
             field_class = fields.CLASSES[field.field_type]
             field_widget = fields.WIDGETS.get(field.field_type)
-            field_args = {"label": field.label, "required": field.required,
+            field_args = {"label":     field.label, "required": field.required,
                           "help_text": field.help_text}
             arg_names = field_class.__init__.__code__.co_varnames
             if "max_length" in arg_names:
@@ -219,6 +219,16 @@ class FormForForm(forms.ModelForm):
                 text = field.placeholder_text
                 self.fields[field_key].widget.attrs["placeholder"] = text
 
+    def clean(self):
+        """
+        Validate the fields marked as unique
+        """
+        for field in self.form_fields:
+            if field.unique:
+                # Check for existence of input in the database, if field is marked as unique
+                if FieldEntry.objects.filter(field_id=field.id, value=self.cleaned_data[field.slug]):
+                    self.add_error(field.slug, _("An entry with this value already exists."))
+
     def save(self, **kwargs):
         """
         Get/create a FormEntry instance and assign submitted values to
@@ -234,7 +244,9 @@ class FormForForm(forms.ModelForm):
             field_key = field.slug
             value = self.cleaned_data[field_key]
             if value and self.fields[field_key].widget.needs_multipart_form:
-                value = fs.save(join("forms", str(uuid4()), value.name), value)
+                filename = join("forms", "%s_%s" % (self.form.id, self.form.slug), "%s_%s" % (
+                entry.id, slugify(os.path.splitext(value.name)[0]) + os.path.splitext(value.name)[1]))
+                value = fs.save(filename, value)
             if isinstance(value, list):
                 value = ", ".join([v.strip() for v in value])
             if field.id in entry_fields:
@@ -298,17 +310,17 @@ class EntriesForm(forms.Form):
                 else:
                     choices = field.get_choices()
                 contains_field = forms.MultipleChoiceField(label=" ",
-                    choices=choices, widget=forms.CheckboxSelectMultiple(),
-                    required=False)
+                                                           choices=choices, widget=forms.CheckboxSelectMultiple(),
+                                                           required=False)
                 self.fields["%s_filter" % field_key] = choice_filter_field
                 self.fields["%s_contains" % field_key] = contains_field
             elif field.is_a(*fields.MULTIPLE):
                 # A fixed set of choices to filter by, with multiple
                 # possible values in the entry field.
                 contains_field = forms.MultipleChoiceField(label=" ",
-                    choices=field.get_choices(),
-                    widget=forms.CheckboxSelectMultiple(),
-                    required=False)
+                                                           choices=field.get_choices(),
+                                                           widget=forms.CheckboxSelectMultiple(),
+                                                           required=False)
                 self.fields["%s_filter" % field_key] = multiple_filter_field
                 self.fields["%s_contains" % field_key] = contains_field
             elif field.is_a(*fields.DATES):
@@ -394,7 +406,7 @@ class EntriesForm(forms.Form):
         # if specified.
         model = self.fieldentry_model
         field_entries = model.objects.filter(entry__form=self.form
-            ).order_by("-entry__id").select_related("entry")
+                                             ).order_by("-entry__id").select_related("entry")
         if self.posted_data("field_0_filter") == FILTER_CHOICE_BETWEEN:
             time_from = self.posted_data("field_0_from")
             time_to = self.posted_data("field_0_to")
