@@ -122,11 +122,6 @@ class FormAdmin(admin.ModelAdmin):
             field.order = idx
             field.save(update_fields=["order"])
 
-
-
-
-
-
     def get_queryset(self, request):
         """
         Annotate the queryset with the entries count for use in the
