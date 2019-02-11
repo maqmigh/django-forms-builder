@@ -27,7 +27,7 @@ def move_files(apps, schema_editor):
         for fe in FieldEntry.objects.filter(field_id=f.id):
             try:
                 fuuid = fe.value.split("/")[1]
-            except IndexError:
+            except (IndexError, AttributeError):
                 print("Error in fieldentry %s" % f.id)
                 continue
             try:
