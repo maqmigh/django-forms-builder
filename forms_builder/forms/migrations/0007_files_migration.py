@@ -25,14 +25,18 @@ def move_files(apps, schema_editor):
 
     for f in Field.objects.filter(field_type=9):
         for fe in FieldEntry.objects.filter(field_id=f.id):
-            fuuid = fe.value.split("/")[1]
+            try:
+                fuuid = fe.value.split("/")[1]
+            except IndexError:
+                print("Error in fieldentry %s" % f.id)
+                continue
             try:
                 UUID(fuuid)
                 newname = os.path.join("forms", "%s_%s" % (f.form.id, f.form.slug), "%s_%s" % (fe.id, os.path.basename(fe.value)))
                 try:
                     os.renames(UPLOAD_ROOT + fe.value, UPLOAD_ROOT + newname)
                 except OSError as e:
-                    print (e)
+                    print(e)
                     continue
                 fe.value = newname
                 fe.save(update_fields=['value'])
