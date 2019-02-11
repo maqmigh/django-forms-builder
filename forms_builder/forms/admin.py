@@ -116,6 +116,17 @@ class FormAdmin(admin.ModelAdmin):
                 fe.save(update_fields=['value', 'hashed'])
         return super(FormAdmin, self).save_model(request, obj, form, change)
 
+    def save_related(self, request, form, formsets, change):
+        super(FormAdmin, self).save_related(request, form, formsets, change)
+        for idx, field in enumerate(form.instance.fields.all()):
+            field.order = idx
+            field.save(update_fields=["order"])
+
+
+
+
+
+
     def get_queryset(self, request):
         """
         Annotate the queryset with the entries count for use in the
