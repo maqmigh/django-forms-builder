@@ -4,6 +4,8 @@ import json
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.views.decorators.clickjacking import xframe_options_exempt
+
 try:
     from django.urls import reverse
 except ImportError:
@@ -122,7 +124,7 @@ def form_sent(request, slug, template="forms/form_sent.html"):
     context = {"form": get_object_or_404(published, slug=slug)}
     return render(request, template, context)
 
-
+@xframe_options_exempt
 def form_embed(request, slug, template="forms/form_embed.html"):
     """
     Form embed view.
