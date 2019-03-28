@@ -7,11 +7,13 @@
     <li><a href="{% url "admin:form_entries" object_id %}">{% trans "View entries" %}</a></li>
     {% if original %}
         <li>
+            {% spaceless %}
             <textarea id="embed_code" style="display:none;">
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.0.4/iframeResizer.min.js"></script>
                 <iframe id="formembed{{ original.id }}" src="{{ request.scheme }}://{{ request.get_host }}{{ original.get_absolute_url }}embed/" style="width: 100%;"></iframe>
                 <script>iFrameResize('#formembed{{ original.id }}')</script>
             </textarea>
+            {% endspaceless %}
             <a href="javascript:copyToClipboard('#embed_code');" class="historylink">{% trans "Copy embed code" %}</a>
             <script>
                 function copyToClipboard(element) {
