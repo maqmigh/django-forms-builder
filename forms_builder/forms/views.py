@@ -5,6 +5,7 @@ import json
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.views.decorators.clickjacking import xframe_options_exempt
+from django.views.decorators.csrf import csrf_exempt
 
 try:
     from django.urls import reverse
@@ -12,7 +13,7 @@ except ImportError:
     # For Django 1.8 compatibility
     from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import get_object_or_404, redirect, render_to_response, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template import RequestContext
 from django.utils.http import urlquote
 from django.views.generic.base import TemplateView
@@ -26,7 +27,6 @@ from forms_builder.forms.utils import split_choices
 
 
 class FormDetail(TemplateView):
-
     template_name = "forms/form_detail.html"
 
     def get_context_data(self, **kwargs):
@@ -64,20 +64,20 @@ class FormDetail(TemplateView):
             self.send_emails(request, form_for_form, form, entry, attachments)
             if not self.request.is_ajax():
                 return redirect(form.redirect_url or
-                    reverse("form_sent", kwargs={"slug": form.slug}))
+                                reverse("form_sent", kwargs={"slug": form.slug}))
         context = {"form": form, "form_for_form": form_for_form}
         return self.render_to_response(context)
 
     def render_to_response(self, context, **kwargs):
         if self.request.method == "POST" and self.request.is_ajax():
             json_context = json.dumps({
-                "errors": context["form_for_form"].errors,
-                "form": context["form_for_form"].as_p(),
+                "errors":  context["form_for_form"].errors,
+                "form":    context["form_for_form"].as_p(),
                 "message": context["form"].response,
             })
             if context["form_for_form"].errors:
                 return HttpResponseBadRequest(json_context,
-                    content_type="application/json")
+                                              content_type="application/json")
             return HttpResponse(json_context, content_type="application/json")
         return super(FormDetail, self).render_to_response(context, **kwargs)
 
@@ -92,7 +92,7 @@ class FormDetail(TemplateView):
                 value = ", ".join([i.strip() for i in value])
             fields.append((v.label, value))
         context = {
-            "fields": fields,
+            "fields":  fields,
             "message": form.email_message,
             "request": request,
         }
@@ -113,6 +113,7 @@ class FormDetail(TemplateView):
                                fail_silently=EMAIL_FAIL_SILENTLY,
                                headers=headers)
 
+
 form_detail = FormDetail.as_view()
 
 
@@ -124,7 +125,9 @@ def form_sent(request, slug, template="forms/form_sent.html"):
     context = {"form": get_object_or_404(published, slug=slug)}
     return render(request, template, context)
 
+
 @xframe_options_exempt
+@csrf_exempt
 def form_embed(request, slug, template="forms/form_embed.html"):
     """
     Form embed view.
@@ -132,4 +135,3 @@ def form_embed(request, slug, template="forms/form_embed.html"):
     published = Form.objects.published(for_user=request.user)
     context = {"form": get_object_or_404(published, slug=slug)}
     return render(request, template, context)
-
