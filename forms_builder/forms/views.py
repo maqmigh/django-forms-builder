@@ -132,6 +132,5 @@ def form_embed(request, slug, template="forms/form_embed.html"):
     """
     Form embed view.
     """
-    published = Form.objects.published(for_user=request.user)
-    context = {"form": get_object_or_404(published, slug=slug)}
+    context = {"form": Form.objects.filter(slug=slug).first()}
     return render(request, template, context)
