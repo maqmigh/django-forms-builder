@@ -1,0 +1,413 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-17 10:10+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
+
+#: forms/admin.py:46 forms/fields.py:37
+msgid "Email"
+msgstr "E-pošta"
+
+#: forms/admin.py:51 forms/models.py:68 forms/models.py:180
+msgid "Slug"
+msgstr "Slug"
+
+#: forms/admin.py:54
+msgid "Sites"
+msgstr "Strani"
+
+#: forms/admin.py:228
+#, python-format
+msgid "1 entry deleted"
+msgid_plural "%(count)s entries deleted"
+msgstr[0] "1 vnos izbrisan"
+msgstr[1] "%(count)s vnosov izbrisanih"
+
+#: forms/admin.py:232
+msgid "View Entries"
+msgstr "Poglej vnose"
+
+#: forms/fields.py:35
+msgid "Single line text"
+msgstr "Vrstica besedila"
+
+#: forms/fields.py:36
+msgid "Multi line text"
+msgstr "Več vrstic besedila"
+
+#: forms/fields.py:38
+msgid "Number"
+msgstr "Število"
+
+#: forms/fields.py:39
+msgid "URL"
+msgstr "URL"
+
+#: forms/fields.py:40
+msgid "Check box"
+msgstr ""
+
+#: forms/fields.py:41
+msgid "Check boxes"
+msgstr "Check box-i"
+
+#: forms/fields.py:42
+msgid "Drop down"
+msgstr ""
+
+#: forms/fields.py:43
+msgid "Multi select"
+msgstr ""
+
+#: forms/fields.py:44
+msgid "Radio buttons"
+msgstr ""
+
+#: forms/fields.py:45
+msgid "File upload"
+msgstr "Upload datoteke"
+
+#: forms/fields.py:46
+msgid "Date"
+msgstr "Datum"
+
+#: forms/fields.py:47 forms/models.py:244
+msgid "Date/time"
+msgstr "Datum/čas"
+
+#: forms/fields.py:48
+msgid "Date of birth"
+msgstr "Datum rojstva"
+
+#: forms/fields.py:49
+msgid "Hidden"
+msgstr "Skrito"
+
+#: forms/forms.py:63 forms/forms.py:72 forms/forms.py:79 forms/forms.py:88
+msgid "Nothing"
+msgstr "Nič"
+
+#: forms/forms.py:64
+msgid "Contains"
+msgstr "Vsebuje"
+
+#: forms/forms.py:65
+msgid "Doesn't contain"
+msgstr "Ne vsebuje"
+
+#: forms/forms.py:66
+msgid "Equals"
+msgstr "Je enako"
+
+#: forms/forms.py:67
+msgid "Doesn't equal"
+msgstr "Ni enako"
+
+#: forms/forms.py:73
+msgid "Equals any"
+msgstr "Enako enemu od"
+
+#: forms/forms.py:74
+msgid "Doesn't equal any"
+msgstr "Ni enako nobenemu od"
+
+#: forms/forms.py:80
+msgid "Contains any"
+msgstr "Vsebuje karkoli od"
+
+#: forms/forms.py:81
+msgid "Contains all"
+msgstr "Vsebuje vse"
+
+#: forms/forms.py:82
+msgid "Doesn't contain any"
+msgstr "Ne vsebuje ničesar od"
+
+#: forms/forms.py:83
+msgid "Doesn't contain all"
+msgstr "Ne vsebuje vseh"
+
+#: forms/forms.py:89
+msgid "Is between"
+msgstr "Je med"
+
+#: forms/forms.py:230
+msgid "An entry with this value already exists."
+msgstr "Vnos s to vrednostjo že obstaja"
+
+#: forms/forms.py:309
+msgid "Checked"
+msgstr ""
+
+#: forms/forms.py:309
+msgid "Not checked"
+msgstr ""
+
+#: forms/forms.py:332 forms/forms.py:347
+msgid "and"
+msgstr "in"
+
+#: forms/models.py:27
+msgid "draft"
+msgstr "osnutek"
+
+#: forms/models.py:28
+msgid "published"
+msgstr "objavljeno"
+
+#: forms/models.py:29
+msgid "archived"
+msgstr "arhivirano"
+
+#: forms/models.py:67
+msgid "Title"
+msgstr "Naslov"
+
+#: forms/models.py:70
+msgid "Intro"
+msgstr "Uvod"
+
+#: forms/models.py:71
+msgid "Button text"
+msgstr "Besedilo gumba"
+
+#: forms/models.py:72
+msgid "Submit"
+msgstr "Pošlji"
+
+#: forms/models.py:73
+msgid "Response"
+msgstr "Odziv"
+
+#: forms/models.py:74
+msgid "Redirect url"
+msgstr "Preusmeritev"
+
+#: forms/models.py:76
+msgid "An alternate URL to redirect to after form submission"
+msgstr "URL kamor se uporabnika preusmeri po oddaji obrazca"
+
+#: forms/models.py:77
+msgid "Status"
+msgstr ""
+
+#: forms/models.py:79
+msgid "Published from"
+msgstr "Objavljeno od"
+
+#: forms/models.py:80
+msgid "With published selected, won't be shown until this time"
+msgstr "Če je objavljeno, ne bo prikazano do tega časa"
+
+#: forms/models.py:82
+msgid "Expires on"
+msgstr "Poteče"
+
+#: forms/models.py:83
+msgid "With published selected, won't be shown after this time"
+msgstr "Če je objavljeno, ne bo prikazano po tem času"
+
+#: forms/models.py:85
+msgid "Login required"
+msgstr "Obvezna prijava"
+
+#: forms/models.py:86
+msgid "If checked, only logged in users can view the form"
+msgstr "Če je izbrano, obrazec vidijo samo prijavljeni uporabniki"
+
+#: forms/models.py:87
+msgid "Send email"
+msgstr "Pošiljanje e-pošte"
+
+#: forms/models.py:88
+msgid "If checked, the person entering the form will be sent an email"
+msgstr "Če je izbrano, oseba ki izpolni obrazec prejme e-pošto"
+
+#: forms/models.py:89
+msgid "From address"
+msgstr "Naslov pošiljatelja"
+
+#: forms/models.py:90
+msgid "The address the email will be sent from"
+msgstr "Naslov s katerega bo poslano sporočilo"
+
+#: forms/models.py:91
+msgid "Send copies to"
+msgstr "Pošlji kopije"
+
+#: forms/models.py:92
+msgid "One or more email addresses, separated by commas"
+msgstr "En ali več naslovov, ločenih z vejicami"
+
+#: forms/models.py:94
+msgid "Subject"
+msgstr "Zadeva sporočila"
+
+#: forms/models.py:95
+msgid "Message"
+msgstr "Sporočilo"
+
+#: forms/models.py:100
+msgid "Form"
+msgstr "Obrazec"
+
+#: forms/models.py:101
+msgid "Forms"
+msgstr "Obrazci"
+
+#: forms/models.py:151
+msgid "View form on site"
+msgstr "Poglej obrazec na strani"
+
+#: forms/models.py:152
+msgid "Filter entries"
+msgstr "Filtriraj vnose"
+
+#: forms/models.py:153
+msgid "View all entries"
+msgstr "Poglej vse vnose"
+
+#: forms/models.py:154
+msgid "Export all entries"
+msgstr "Izvozi vse vnose"
+
+#: forms/models.py:179
+msgid "Label"
+msgstr "Oznaka"
+
+#: forms/models.py:182
+msgid "Type"
+msgstr "Tip"
+
+#: forms/models.py:183
+msgid "Required"
+msgstr "Obvezno"
+
+#: forms/models.py:184
+msgid "Unique"
+msgstr "Unikatno"
+
+#: forms/models.py:185
+msgid "Anonymize"
+msgstr "Anonimizirano"
+
+#: forms/models.py:186
+msgid "Visible"
+msgstr "Vidno"
+
+#: forms/models.py:187
+msgid "Choices"
+msgstr "Možnosti"
+
+#: forms/models.py:192
+msgid "Default value"
+msgstr "Privzeta vrednost"
+
+#: forms/models.py:194
+msgid "Placeholder Text"
+msgstr "Placeholder besedilo"
+
+#: forms/models.py:196
+msgid "Help text"
+msgstr "Besedilo za pomoč"
+
+#: forms/models.py:201 forms/templates/admin/forms/entries.html:88
+msgid "Field"
+msgstr "Polje"
+
+#: forms/models.py:202
+msgid "Fields"
+msgstr "Polja"
+
+#: forms/models.py:247
+msgid "Form entry"
+msgstr "Vnos"
+
+#: forms/models.py:248
+msgid "Form entries"
+msgstr "Vnosi"
+
+#: forms/models.py:262
+msgid "Form field entry"
+msgstr "Vnos v polje"
+
+#: forms/models.py:263
+msgid "Form field entries"
+msgstr "Vnosi v polja"
+
+#: forms/models.py:291
+msgid "Order"
+msgstr "Vrstni red"
+
+#: forms/templates/admin/forms/change_form.html:7
+#: forms/templates/admin/forms/entries.html:117
+msgid "View entries"
+msgstr "Poglej vnose"
+
+#: forms/templates/admin/forms/change_form.html:17
+msgid "Copy embed code"
+msgstr "Skopiraj kodo za vgradnjo"
+
+#: forms/templates/admin/forms/entries.html:62
+msgid "No entries selected"
+msgstr "Ni izbranih vnosov"
+
+#: forms/templates/admin/forms/entries.html:65
+msgid "Delete selected entries?"
+msgstr "Izbriši izbrane vnose"
+
+#: forms/templates/admin/forms/entries.html:74
+msgid "Home"
+msgstr "Domov"
+
+#: forms/templates/admin/forms/entries.html:89
+msgid "Include"
+msgstr "Izberi"
+
+#: forms/templates/admin/forms/entries.html:90
+msgid "Filter by"
+msgstr "Filtriraj po"
+
+#: forms/templates/admin/forms/entries.html:108
+msgid "All"
+msgstr "Vse"
+
+#: forms/templates/admin/forms/entries.html:116
+#: forms/templates/admin/forms/entries.html:157
+msgid "Back to form"
+msgstr "Nazaj na obrazec"
+
+#: forms/templates/admin/forms/entries.html:118
+msgid "Export CSV"
+msgstr "Izvozi CSV"
+
+#: forms/templates/admin/forms/entries.html:120
+msgid "Export XLS"
+msgstr "Izvozi XLS"
+
+#: forms/templates/admin/forms/entries.html:124
+msgid "Entries"
+msgstr "Vnosi"
+
+#: forms/templates/admin/forms/entries.html:158
+msgid "Delete selected"
+msgstr "Izbriši izbrano"
+
+#: forms/templates/admin/forms/entries.html:162
+msgid "No entries to display"
+msgstr "Ni vnosov za prikaz"
