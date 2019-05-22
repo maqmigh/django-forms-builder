@@ -223,11 +223,16 @@ class FormForForm(forms.ModelForm):
         """
         Validate the fields marked as unique
         """
+
+        print(self.cleaned_data)
         for field in self.form_fields:
             if field.unique:
                 # Check for existence of input in the database, if field is marked as unique
-                if FieldEntry.objects.filter(field_id=field.id, value=self.cleaned_data[field.slug]):
-                    self.add_error(field.slug, _("An entry with this value already exists."))
+                try:
+                    if FieldEntry.objects.filter(field_id=field.id, value=self.cleaned_data[field.slug]):
+                        self.add_error(field.slug, _("An entry with this value already exists."))
+                except KeyError:
+                    pass
 
     def save(self, **kwargs):
         """
@@ -245,7 +250,7 @@ class FormForForm(forms.ModelForm):
             value = self.cleaned_data[field_key]
             if value and self.fields[field_key].widget.needs_multipart_form:
                 filename = join("forms", "%s_%s" % (self.form.id, self.form.slug), "%s_%s" % (
-                entry.id, slugify(os.path.splitext(value.name)[0]) + os.path.splitext(value.name)[1]))
+                    entry.id, slugify(os.path.splitext(value.name)[0]) + os.path.splitext(value.name)[1]))
                 value = fs.save(filename, value)
             if isinstance(value, list):
                 value = ", ".join([v.strip() for v in value])
