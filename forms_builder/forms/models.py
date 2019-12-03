@@ -49,7 +49,6 @@ class FormManager(models.Manager):
 #                                                                    #
 ######################################################################
 
-@python_2_unicode_compatible
 class AbstractForm(models.Model):
     """
     A user-built form.
