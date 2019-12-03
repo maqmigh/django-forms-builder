@@ -2,16 +2,9 @@ from __future__ import unicode_literals
 
 from django import VERSION as DJANGO_VERSION
 from django.contrib.sites.models import Site
-
-try:
-    from django.urls import reverse
-except ImportError:
-    # For Django 1.8 compatibility
-    from django.core.urlresolvers import reverse
-
+from django.urls import reverse
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, ugettext_lazy as _
 from future.builtins import str
@@ -170,7 +163,6 @@ class FieldManager(models.Manager):
         return self.filter(visible=True)
 
 
-@python_2_unicode_compatible
 class AbstractField(models.Model):
     """
     A field for a user-built form.
