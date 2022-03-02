@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.db import models
 from django.db.models import Q
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from future.builtins import str
 
 from forms_builder.forms import fields
