@@ -15,7 +15,7 @@ except ImportError:
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import RequestContext
-from django.utils.http import urlquote
+from urllib.parse import quote as urlquote
 from django.views.generic.base import TemplateView
 from email_extras.utils import send_mail_template
 
