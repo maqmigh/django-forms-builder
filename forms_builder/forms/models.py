@@ -146,7 +146,7 @@ class AbstractForm(models.Model):
             (_("Export all entries"), reverse("admin:form_entries_export", **kw)),
         ]
         for i, (text, url) in enumerate(links):
-            links[i] = "<a href='%s'>%s</a>" % (url, ugettext(text))
+            links[i] = "<a href='%s'>%s</a>" % (url, gettext(text))
         return mark_safe("<br>".join(links))
 
     admin_links.allow_tags = True
