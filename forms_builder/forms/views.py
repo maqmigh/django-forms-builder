@@ -132,5 +132,6 @@ def form_embed(request, slug, template="forms/form_embed.html"):
     """
     Form embed view.
     """
-    context = {"form": Form.objects.filter(slug=slug).first()}
-    return render(request, template, context)
+    form = Form.objects.filter(slug=slug).first()
+    context = {"form": form }
+    return render(request, ["forms/%s_form_embed.html" % form.id, template], context)
