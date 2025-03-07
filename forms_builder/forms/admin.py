@@ -225,7 +225,7 @@ class FormAdmin(admin.ModelAdmin):
                     count = entries.count()
                     if count > 0:
                         entries.delete()
-                        message = ungettext("1 entry deleted",
+                        message = ngettext("1 entry deleted",
                                             "%(count)s entries deleted", count)
                         info(request, message % {"count": count})
         template = "admin/forms/entries.html"
