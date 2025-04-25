@@ -12,7 +12,7 @@ try:
 except ImportError:
     # For Django 1.8 compatibility
     from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import RequestContext
 from urllib.parse import quote as urlquote
@@ -133,5 +133,7 @@ def form_embed(request, slug, template="forms/form_embed.html"):
     Form embed view.
     """
     form = Form.objects.filter(slug=slug).first()
+    if not form:
+        raise Http404
     context = {"form": form }
     return render(request, ["forms/%s_form_embed.html" % form.id, template], context)
