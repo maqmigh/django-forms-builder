@@ -224,7 +224,7 @@ class FormForForm(forms.ModelForm):
         Validate the fields marked as unique
         """
 
-        print(self.cleaned_data)
+        #print(self.cleaned_data)
         for field in self.form_fields:
             if field.unique:
                 # Check for existence of input in the database, if field is marked as unique
