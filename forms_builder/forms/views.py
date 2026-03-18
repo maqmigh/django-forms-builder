@@ -62,14 +62,14 @@ class FormDetail(TemplateView):
             entry = form_for_form.save()
             form_valid.send(sender=request, form=form_for_form, entry=entry)
             self.send_emails(request, form_for_form, form, entry, attachments)
-            if not request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            if not self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return redirect(form.redirect_url or
                                 reverse("form_sent", kwargs={"slug": form.slug}))
         context = {"form": form, "form_for_form": form_for_form}
         return self.render_to_response(context)
 
     def render_to_response(self, context, **kwargs):
-        if self.request.method == "POST" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if self.request.method == "POST" and self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             json_context = json.dumps({
                 "errors":  context["form_for_form"].errors,
                 "form":    context["form_for_form"].as_p(),
