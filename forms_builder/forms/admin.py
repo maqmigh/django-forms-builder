@@ -9,6 +9,7 @@ from mimetypes import guess_type
 from os.path import join
 
 from django.contrib import admin
+from django.conf import settings as django_settings
 from django.core.files.storage import FileSystemStorage
 from future.builtins import bytes, open
 
@@ -43,8 +44,8 @@ form_admin_fieldsets = [
     (None, {"fields": ("title", ("status", "login_required",),
                        ("publish_date", "expiry_date",),
                        "intro", "button_text", "response", "redirect_url")}),
-    (_("Email"), {"fields": ("send_email", "email_from", "email_copies",
-                             "email_subject", "email_message")}), ]
+    (_("Email"), {"fields": ("send_email", "email_from", "email_attachment",
+                             "email_copies", "email_subject", "email_message")}), ]
 
 if EDITABLE_SLUGS:
     form_admin_fieldsets.append(
@@ -100,6 +101,8 @@ class FormAdmin(admin.ModelAdmin):
     radio_fields = {"status": admin.HORIZONTAL}
     fieldsets = form_admin_fieldsets
     save_on_top = True
+    if "multimedia" in django_settings.INSTALLED_APPS:
+        raw_id_fields = ("email_attachment",)
 
     def has_change_permission(self, request, obj=None):
         if obj and obj.status == STATUS_ARCHIVED:

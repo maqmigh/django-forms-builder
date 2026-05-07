@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django import VERSION as DJANGO_VERSION
+from django.conf import settings as django_settings
 from django.contrib.sites.models import Site
 from django.urls import reverse
 from django.db import models
@@ -80,6 +81,21 @@ class AbstractForm(models.Model):
     _("If checked, the person entering the form will be sent an email"))
     email_from = models.EmailField(_("From address"), blank=True,
                                    help_text=_("The address the email will be sent from"))
+    if "multimedia" in django_settings.INSTALLED_APPS:
+        email_attachment = models.ForeignKey(
+            "multimedia.AttachedFile",
+            verbose_name=_("Attachment"),
+            blank=True,
+            null=True,
+            on_delete=models.SET_NULL,
+        )
+    else:
+        email_attachment = models.FileField(
+            _("Attachment"),
+            upload_to="forms_attachments/",
+            blank=True,
+            null=True,
+        )
     email_copies = models.CharField(_("Send copies to"), blank=True,
                                     help_text=_("One or more email addresses, separated by commas"),
                                     max_length=200)
@@ -105,6 +121,17 @@ class AbstractForm(models.Model):
             slug = slugify(self)
             self.slug = unique_slug(self.__class__.objects, "slug", slug)
         super(AbstractForm, self).save(*args, **kwargs)
+
+    def get_email_attachment(self):
+        attachment = getattr(self, "email_attachment", None)
+        if not attachment:
+            return None
+
+        uploaded_file = getattr(attachment, "uploaded_file", None)
+        if uploaded_file:
+            return uploaded_file
+
+        return attachment
 
     def published(self, for_user=None):
         """
